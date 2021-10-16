@@ -1,0 +1,110 @@
+body{
+    margin: 0;
+}
+main{margin: 0;}
+
+.faixa{
+    height: 60px;
+    width: 100%;
+    background: #212121;;
+    margin: 0;
+    display: flex;
+    flex-direction: line;
+}
+.baixo{
+    position: absolute;
+    bottom: 0px;
+}
+
+.botao{
+    background-color:#212121; ;
+    width: 100px;
+    height: 40px;
+
+
+}  
+  .fundobotao:hover{
+    color:#212121;;
+    background-color: brown;
+        border-radius: 1em;
+    }
+.formletra{
+    color: white;
+    font-family: helvetica,verdana,arial;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.margem{
+    position: absolute;
+    top: 10px;
+    
+}
+.botaoU{
+    left: 150px;
+}
+.botaoD{
+    right: 100px;
+}
+.botaoT{
+    right: 250px;
+}
+.botaoQ{
+    right: 400px;
+    border-radius: 1em;
+    background-color: orange;
+}
+.meio{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+ul{
+    width: 40%;
+    height: 170px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    flex-direction: line;
+    justify-content: center;
+    justify-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+li{
+    width: 50%;
+    height: 100%;
+        
+
+}
+p{
+    color: #212121;
+    font-family: arial;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+form{
+    position: absolute;
+    top: 70px;
+    right: 40px;
+}
+.borda{
+    border-left: dotted 1px #212121;;
+
+}
+.corfundo{
+    background-color: #F8F8FF;
+}
+.margemm{
+    margin: 5px;
+}
