@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Compra.init({
-    data: DataTypes.DATEONLY
+    date: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'Compra',

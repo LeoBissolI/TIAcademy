@@ -57,13 +57,31 @@ app.post('/clientes', async(req,res) =>{
     });
 });
 
-app.get('/pedidos', function (req, res){
-    res.send('Seus pedidos')
-});
+// app.get('/pedidos', function (req, res){
+//     res.send('Seus pedidos')
+// });
+
+
+app.post('/pedidos', async (req, res) => {
+    await pedido.create(req.body)
+      .then(() => {
+        return res.json({
+          error: false,
+          message: 'Pedido criado com sucesso.'
+        })
+      })
+      .catch(() => {
+        res.status(400).json({
+          error: true,
+          message: 'Não foi possível criar o pedido.'
+        })
+      })
+    res.send('Pedido realizado com sucesso!')
+  })
 
 app.post('/cliente/:id/pedido', async (req, res) => {
     const ped = {
-        dataPedido: req.body,
+        dataPedido: req.body.dataPedido,
         ClienteId: req.params.id
     };
 
@@ -89,7 +107,27 @@ app.post('/cliente/:id/pedido', async (req, res) => {
         });
 });
 
+// uma alteraçao para listagem de pedido no id 
 
+app.get('/cliente/:id/pedido', async (req, res) => {
+    await pedido
+      .findAll({
+        where: { ClienteId: req.params.id }
+      })
+      .then(item => {
+        return res.json({
+          error: false,
+          item
+        })
+      })
+      .catch(function (erro) {
+        return res.status(400).json({
+          error: true,
+          message: 'Erro: Não foi possível fazer a conexão!'
+        })
+      })
+  })
+  
 
 
 app.post('/itempedidos', async(req,res) =>{
@@ -117,7 +155,7 @@ app.get('/pedidos', function (req, res){
 });
 
 
-app.get('/itempedidos', function (req, res){
+app.get('/itempedido', function (req, res){
     res.send('Agende um serviço');
 });
 
@@ -135,6 +173,16 @@ app.get('/listaservicos', async(req,res) => {
         res.json({servicos})
     });
 });
+
+app.get('/listapedidos', async (req, res) => {
+    await pedido
+      .findAll({
+        raw: true
+      })
+      .then(function (pedidos) {
+        res.json({ pedidos })
+      })
+  })
 
 app.get('/listaclientes', async(req,res) =>{
     await cliente.findAll({
@@ -164,6 +212,24 @@ app.get('/servico/:id', async(req,res)=>{
         }); 
     });
 });
+
+
+app.get('/servico/:id/pedidos', async(req,res)=>{
+    await itempedido.findAll({ 
+        where: {ServicoId: req.params.id}})
+    .then(item =>{
+        return res.json({
+            error: false,
+            item
+        });
+    }).catch(function(erro){
+        return res.status(400).json({
+            error: true,
+        message: "Erro: código não encontrado!"
+        }); 
+    });
+});
+
 
 app.put('/atualizaservico', async(req,res)=> {
     await servico.update(req.body, {
@@ -298,22 +364,74 @@ app.post('/compras', async(req,res) =>{
 
 // Listar produtos , compras e item compras 
 
-app.get('/listaprodutos', async(req,res) => {
-    await produto.findAll({
-        order: [['nome', 'ASC']]
-    }).then(function(produtos){
-        res.json({produtos})
-    });
-});
+app.get('/listaprodutos', async (req, res) => {
+    await produto
+      .findAll({
+        raw: true
+      })
+      .then(function (produtos) {
+        res.json({ produtos })
+      })
+  })
+  
 
-app.get('/listacompras', async(req,res) => {
-    await produto.findAll({
-        order: [['nome', 'ASC']]
-    }).then(function(compras){
-        res.json({compras})
-    });
-});
+app.get('/listacompras', async (req, res) => {
+    await compra
+      .findAll({
+        raw: true
+      })
+      .then(function (compras) {
+        res.json({ compras })
+      })
+  })
 
+// app.get('/listacompras', async(req,res) => {
+//     await produto.findAll({
+//         order: [['nome', 'ASC']]
+//     }).then(function(compras){
+//         res.json({compras})
+//     });
+// });
+
+app.get('/cliente/:id/compra', async (req, res) => {
+    await compra
+      .findAll({
+        where: { ClienteId: req.params.id }
+      })
+      .then(item => {
+        return res.json({
+          error: false,
+          item
+        })
+      })
+      .catch(function (erro) {
+        return res.status(400).json({
+          error: true,
+          message: 'Erro: Não foi possível fazer a conexão!'
+        })
+      })
+  })
+
+
+
+  app.get('/produto/:id/compras', async (req, res) => {
+    await itemcompra
+      .findAll({
+        where: { ProdutoId: req.params.id }
+      })
+      .then(item => {
+        return res.json({
+          error: false,
+          item
+        })
+      })
+      .catch(function (erro) {
+        return res.status(400).json({
+          error: true,
+          message: 'Erro: Não foi possível fazer a conexão!'
+        })
+      })
+  })
 
 app.get('/compras/:id', async(req,res)=>{
     await compra.findByPk(req.params.id)
