@@ -64,7 +64,7 @@ export const CadastrarCompra = () => {
           <h1>Cadastrar Nova Compra</h1>
         </div>
         <div className="p-2">
-          <Link to="/listar-compras" className="btn btn-utline-success btn-sm">
+          <Link to="/listar-compras" className="btn btn-outline-success btn-sm">
             Compras
           </Link>
         </div>
